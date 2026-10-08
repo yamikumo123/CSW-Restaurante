@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from typing import Callable, Optional
 
 
@@ -1564,7 +1565,34 @@ def iniciar_interfaz():
 
     app = RestauranteApp()
     app.mainloop()
+def _validar_texto(self, valor: str, campo: str):
+        texto = valor.strip()
+        if not texto:
+            messagebox.showerror("Error", f"El campo '{campo}' no puede estar vacío.")
+            return None
+        return texto
 
+def _validar_entero(self, valor: str, campo: str, minimo: int = 1):
+        try:
+            num = int(valor.strip())
+            if num < minimo:
+                messagebox.showerror("Error", f"El campo '{campo}' debe ser mayor o igual a {minimo}.")
+                return None
+            return num
+        except ValueError:
+            messagebox.showerror("Error", f"El campo '{campo}' debe ser un número entero válido.")
+            return None
+
+def _validar_flotante(self, valor: str, campo: str, minimo: float = 0.0):
+        try:
+            monto = float(valor.strip())
+            if monto <= minimo:
+                messagebox.showerror("Error", f"El campo '{campo}' debe ser mayor a S/. {minimo:.2f}.")
+                return None
+            return monto
+        except ValueError:
+            messagebox.showerror("Error", f"El campo '{campo}' debe ser un monto decimal válido.")
+            return None
 
 if __name__ == "__main__":
     iniciar_interfaz()
